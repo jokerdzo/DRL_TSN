@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import random
 from TSN.parameter import *
+import os
 import numpy as np
 
 # DQN网络结构
@@ -75,38 +76,13 @@ class DQNAgent:
     def decay_epsilon(self):
         self.epsilon = max(EPSILON_END, self.epsilon * EPSILON_DECAY)
 
-# CQF队列类
-class CQFQueue:
-    def __init__(self):
-        self.send_queue = []
-        self.receive_queue = []
-        self.total_send_size = 0
-        self.total_receive_size = 0
+    def save_model(self, file_path):
+        torch.save(self.policy_net.state_dict(), file_path)
 
-    def enqueue(self, frame):
-        if self.total_receive_size + frame.size <= CQF_QUEUE_LENGTH:
-            self.receive_queue.append(frame)
-            self.total_receive_size += frame.size
-            return True
-        return False
-
-    def dequeue_send(self):
-        if self.send_queue:
-            frame = self.send_queue.pop(0)
-            self.total_send_size -= frame.size
-            return frame
-        return None
-
-    def enqueue_send(self, frame):
-        if self.total_send_size + frame.size <= CQF_QUEUE_LENGTH:
-            self.send_queue.append(frame)
-            self.total_send_size += frame.size
-            return True
-        return False
-
-    def dequeue_receive(self):
-        if self.receive_queue:
-            frame = self.receive_queue.pop(0)
-            self.total_receive_size -= frame.size
-            return frame
-        return None
+    def load_model(self, file_path):
+        if os.path.exists(file_path):
+            self.policy_net.load_state_dict(torch.load(file_path))
+            self.target_net.load_state_dict(self.policy_net.state_dict())
+            print(f"Loaded model from {file_path}")
+        else:
+            print(f"Model file {file_path} not found.")
