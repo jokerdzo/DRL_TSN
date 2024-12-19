@@ -1,3 +1,4 @@
+boto==2.49.0
 Brotli==1.0.9
 certifi==2024.8.30
 charset-normalizer==3.3.2
@@ -26,3 +27,4 @@ triton==3.0.0
 typing_extensions==4.11.0
 urllib3==2.2.3
 wheel==0.44.0
+z3==0.2.0

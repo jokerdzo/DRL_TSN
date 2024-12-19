@@ -21,7 +21,7 @@ CQF_QUEUE_LENGTH = 15000  # CQF队列长度，15000 B
 
 
 # 网络拓扑相关参数（示例，根据实际情况调整）
-NUM_SWITCHES = 5  # 交换机数量
+NUM_SWITCHES = 2  # 交换机数量
 NUM_QUEUES_PER_SWITCH = 4  # 每个交换机的队列数量
 
 EPSILON_START = 1.0  # 初始的epsilon值，表示开始时较高的探索概率

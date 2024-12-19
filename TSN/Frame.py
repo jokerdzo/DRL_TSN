@@ -32,4 +32,5 @@ def generate_frames(num_flows, num_switches):
         max_end_to_end_delay = random.randint(100000, 1000000)  # 随机生成最大端到端延迟
         hop_count = 0  # 初始化跳数为0
         frames.append(Frame(i, period, size, qid, offset, source_switch, destination_switch, release_time, deadline, link_delay, max_end_to_end_delay, hop_count))
+        # print(f"frame{frames[i].flow_id}:生成完毕")
     return frames
